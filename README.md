@@ -7,4 +7,4 @@ Make sure there is a submission bundle file in the current folder (i.e., CSCI261
 To run: 
 python bin/extract.py
 
-Valid submissions will be saved in 'tograde' folder, while the invalid ones will remain in 'submissions' folder. Check erros in logs/extract.log. 
+Valid submissions will be saved in 'tograde' folder, while the invalid ones will remain in 'submissions' folder. Check errors in logs/extract.log. 
