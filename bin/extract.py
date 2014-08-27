@@ -3,7 +3,7 @@
 # Expects only one homework submissions bundle file in the current working folder #
 # Author: Thyago Mota (from Yong's grade.rb)                                      #
 # Date: 06/02/14                                                                  #
-# Last Update: 08/26/14                                                           #
+# Last Update: 08/27/14                                                           #
 # ------------------------------------------------------------------------------- #
 
 import glob, config, logging, datetime, os, shutil
@@ -13,6 +13,8 @@ import SubmissionsBundle
 from SubmissionsBundle import SubmissionsBundle
 
 # setting logging configuration
+if not os.path.exists(config.LOG_FOLDER):
+	os.makedirs(config.LOG_FOLDER)
 if os.path.exists(config.LOG_FOLDER + '/' + config.EXTRACT_LOG_FILE):
 	os.remove(config.LOG_FOLDER + '/' + config.EXTRACT_LOG_FILE)
 logging.basicConfig(filename=config.LOG_FOLDER + '/' + config.EXTRACT_LOG_FILE, level=logging.INFO)
@@ -36,8 +38,10 @@ logging.info(fileName + ' will be graded.')
 # removing previously extracted submissions
 if os.path.exists(config.EXTRACTION_FOLDER):
 	shutil.rmtree(config.EXTRACTION_FOLDER)
+os.makedirs(config.EXTRACTION_FOLDER)
 if os.path.exists(config.TO_GRADE_FOLDER):
 	shutil.rmtree(config.TO_GRADE_FOLDER)
+os.makedirs(config.TO_GRADE_FOLDER)
 
 # extracting students' submissions
 submissions = SubmissionsBundle(logging, fileName)
