@@ -1,6 +1,9 @@
-LOG_FOLDER        = 'logs'
-EXTRACT_LOG_FILE  = 'extract.log'
-EXTRACTION_FOLDER = 'submissions'
-TO_GRADE_FOLDER   = 'tograde'
-HOMEWORK_NUMBER   = 1
-HOMEWORK_DUE_DATE = '2014-08-27 08:00:00'
+LOG_FOLDER         = 'logs'
+EXTRACT_LOG_FILE   = 'extract.log'
+EXTRACTION_FOLDER  = 'submissions'
+INVALID_FOLDER     = 'invalid'
+ON_TIME_FOLDER     = 'ontime'
+LATE_FOLDER        = 'late'
+HOMEWORK_NUMBER    = 1
+HOMEWORK_DUE_DATE  = '2014-08-27 08:00:00'
+HOMEWORK_LATE_DATE = '2014-09-01 08:00:00'

@@ -2,7 +2,7 @@
 # SubmissionsBundle.py - Extracts and verifies student's homework submissions     #
 # Author: Thyago Mota (from Yong's AssignmentAmalgamation.rb)                     #
 # Date: 06/02/2014                                                                #
-# Last update: 08/27/14                                                           #
+# Last update: 08/28/14                                                           #
 # ------------------------------------------------------------------------------- #
 
 import config, zipfile, Submission, os, datetime, shutil
@@ -39,6 +39,9 @@ class SubmissionsBundle:
 		# obtaining due date
 		self.dueDate = datetime.strptime(config.HOMEWORK_DUE_DATE, '%Y-%m-%d %H:%M:%S')
 		self.logging.info('Due date for homework ' + str(config.HOMEWORK_NUMBER) + ' is ' + str(self.dueDate))			
+		# obtaining late date
+		self.lateDate = datetime.strptime(config.HOMEWORK_LATE_DATE, '%Y-%m-%d %H:%M:%S')
+		self.logging.info('Late date for homework ' + str(config.HOMEWORK_NUMBER) + ' is ' + str(self.lateDate))			
 		
 	# 
 	# extension - returns the extension of a file
@@ -60,7 +63,7 @@ class SubmissionsBundle:
 	def extract(self, submission):
 		try:
 			# create student's folder in the extraction folder
-			path = config.EXTRACTION_FOLDER + '/' + submission.studentId + '/'
+			path = config.EXTRACTION_FOLDER + '/' + config.INVALID_FOLDER + '/' + submission.studentId + '/'
 			if not os.path.exists(path): 
 				os.makedirs(path)
 			# extract submission file
@@ -93,12 +96,12 @@ class SubmissionsBundle:
 	# verify - verify submission format and due date
 	def verify(self, submission):
 		# check if submission is past due
-		if submission.dateTime > self.dueDate:
+		if submission.dateTime > self.lateDate:
 			self.logging.warning(submission.studentId + '\'s submission is past due!')
 			return False
 		# check proper format
 		try:
-			path = config.EXTRACTION_FOLDER + '/' + submission.studentId + '/'
+			path = config.EXTRACTION_FOLDER + '/' + config.INVALID_FOLDER + '/' + submission.studentId + '/'
 			if not os.path.isdir(path + 'src'):
 				self.logging.warning('no src folder was found in ' + submission.studentId + '\'s submission!')
 				return False
@@ -113,7 +116,10 @@ class SubmissionsBundle:
 					self.logging.warning('unexpected file(s) was(were) found in ' + submission.studentId + '\'s src submission!')
 					return False
 				# everything looking good -> move student's submission folder
-				os.rename(path, config.TO_GRADE_FOLDER + '/' + submission.studentId + '/')
+				if submission.dateTime < self.dueDate:
+					os.rename(path, config.EXTRACTION_FOLDER + '/' + config.ON_TIME_FOLDER + '/' + submission.studentId + '/')
+				else:	
+					os.rename(path, config.EXTRACTION_FOLDER + '/' + config.LATE_FOLDER + '/' + submission.studentId + '/')
 				return True
 		except Exception, ex:
 			msg = str(ex) + '!'

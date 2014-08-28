@@ -3,7 +3,7 @@
 # Expects only one homework submissions bundle file in the current working folder #
 # Author: Thyago Mota (from Yong's grade.rb)                                      #
 # Date: 06/02/14                                                                  #
-# Last Update: 08/27/14                                                           #
+# Last Update: 08/28/14                                                           #
 # ------------------------------------------------------------------------------- #
 
 import glob, config, logging, datetime, os, shutil
@@ -39,9 +39,9 @@ logging.info(fileName + ' will be graded.')
 if os.path.exists(config.EXTRACTION_FOLDER):
 	shutil.rmtree(config.EXTRACTION_FOLDER)
 os.makedirs(config.EXTRACTION_FOLDER)
-if os.path.exists(config.TO_GRADE_FOLDER):
-	shutil.rmtree(config.TO_GRADE_FOLDER)
-os.makedirs(config.TO_GRADE_FOLDER)
+os.makedirs(config.EXTRACTION_FOLDER + '/' + config.INVALID_FOLDER)
+os.makedirs(config.EXTRACTION_FOLDER + '/' + config.ON_TIME_FOLDER)
+os.makedirs(config.EXTRACTION_FOLDER + '/' + config.LATE_FOLDER)
 
 # extracting students' submissions
 submissions = SubmissionsBundle(logging, fileName)
